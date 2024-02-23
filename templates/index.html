@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <style>
+        body {
+            margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    /* background-image: url('https://images.pexels.com/photos/1064136/pexels-photo-1064136.jpeg?auto=compress&cs=tinysrgb&w=600'); */
+    background-size: cover;
+    background-position: center;
+    background-color: bisque;
+    display: flex;
+    align-items: center; /* Vertically center content */
+    justify-content: center; /* Horizontally center content */
+    height: 100vh; /* Ensure full viewport height */
+        }
+
+        h1 {
+            /* text-align: center;
+            margin-top: 100px; */
+            text-align: center;
+            font-size: 36px; /* Larger font size */
+            font-weight: bold; /* Bold font */
+            color: black; /* White text color */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #productForm {
+            margin: auto;
+            padding: 20px;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold; /* Bold font */
+            color: #007bff; /* Blue text color */
+        }
+
+        form input[type="text"],
+        form select,
+        form button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px; /* Larger font size */
+        }
+
+        form button[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        form button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Welcome to Digital Catalog</h1>
+        <button onclick="showProductForm()">Process Product</button>
+    </div>
+   
+
+    <div id="productForm" style="display:none;">
+        <form action="/process_product" method="post" id="productForm">
+            <label for="choice">Choose Action:</label>
+            <select id="choice" name="choice" onchange="handleChoiceChange()">
+                <option value="add_single">Add a Single Product</option>
+                <option value="add_bulk">Add Bulk Data</option>
+                <option value="delete_product">Delete a Product</option>
+            </select>
+            <br>
+            <div id="productNameInput" style="display:none;">
+                <label for="product_name">Enter Product Name:</label>
+                <input type="text" id="product_name" name="product_name">
+                <br>
+            </div>
+            <div id="chooseLabelImage" style="display:none;">
+                <label for="label_image">Choose Product Label Image:</label>
+                <input type="file" id="label_image" name="label_image" accept=".jpg, .jpeg, .png">
+                <br>
+            </div>
+            <div id="chooseProductImage" style="display:none;">
+                <label for="product_images">Choose Folder Containing Product Images:</label>
+                <input type="file" id="product_images" name="product_images" webkitdirectory directory multiple>
+                <br>
+            </div>
+            <div id="chooseExcelFile" style="display:none;">
+                <label for="excel_file">Choose Excel File:</label>
+                <input type="file" id="excel_file" name="excel_file" accept=".xlsx">
+                <br>
+            </div>
+            <div id="deleteProductInput" style="display:none;">
+                <label for="delete_product_name">Enter Product Name to Delete:</label>
+                <input type="text" id="delete_product_name" name="delete_product_name">
+                <br>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function showProductForm() {
+            document.getElementById("productForm").style.display = "block";
+            document.querySelector("h1").style.display = "none";  
+            document.querySelector("button").style.display = "none";  // Hide "Process Product" button
+
+            // Show "Enter Product Name" input initially
+            document.getElementById("productNameInput").style.display = "block";
+            document.getElementById("chooseLabelImage").style.display = "block";
+            document.getElementById("chooseProductImage").style.display = "block";
+        }
+
+        function handleChoiceChange() {
+            var choiceDropdown = document.getElementById("choice");
+            var productNameInput = document.getElementById("productNameInput");
+            var chooseLabelImage = document.getElementById("chooseLabelImage");
+            var chooseProductImage = document.getElementById("chooseProductImage");
+            var chooseExcelFile = document.getElementById("chooseExcelFile");
+            var deleteProductInput = document.getElementById("deleteProductInput");
+
+            productNameInput.style.display = "none";
+            chooseLabelImage.style.display = "none";
+            chooseProductImage.style.display = "none";
+            chooseExcelFile.style.display = "none";
+            deleteProductInput.style.display = "none";
+
+            if (choiceDropdown.value === "add_single") {
+                productNameInput.style.display = "block";
+                chooseLabelImage.style.display = "block";
+                chooseProductImage.style.display = "block";
+            } else if (choiceDropdown.value === "add_bulk") {
+                chooseExcelFile.style.display = "block";
+            } else if (choiceDropdown.value === "delete_product") {
+                deleteProductInput.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
